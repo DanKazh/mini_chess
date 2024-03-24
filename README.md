@@ -1,4 +1,4 @@
-# chess_2
+# mini_chess
 <h1 style="font-size: 20;"> :wave: Каженец Даниил Николаевич (ИУ5-21Б) </h1> 
 <h1 style="font-size: 20;"> :wave: Макеева Елизавета Андреевна (ИУ5-22Б) </h1> 
 <br>
