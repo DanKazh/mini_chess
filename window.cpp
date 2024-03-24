@@ -98,3 +98,44 @@ chessWindow::chessWindow(int width, int height, const char* name, const char* im
     MapPieces();
     window.create(sf::VideoMode(width, height), name);
 }
+
+bool chessWindow::Update()
+{
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+        switch (event.type)
+        {
+        case sf::Event::Resized:
+            sX = window.getSize().x;
+            sY = window.getSize().y;
+            window.setView(sf::View(sf::FloatRect(0, 0, sX, sY)));
+            if (sX > sY)
+            {
+                holder.width = sY;
+                holder.height = sY;
+                holder.left = sX / 2 - holder.width / 2;
+                holder.top = 0;
+            }
+            else
+            {
+                holder.width = sX;
+                holder.height = sX;
+                holder.top = sY / 2 - holder.height / 2;
+                holder.left = 0;
+            }
+            MapPieces();
+            FitToHolder();
+            break;
+        case sf::Event::Closed:
+            window.close();
+            return false;
+            break;
+        }
+    }
+    window.clear();
+    DrawSquares();
+    DrawPieces();
+    window.display();
+    return true;
+}
