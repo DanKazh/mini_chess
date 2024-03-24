@@ -10,7 +10,7 @@ struct chessPiece {
 	bool draw = 0;
 };
 
-class chessWin {
+class chessWindow {
 private:
 	sf::RenderWindow win;
 	sf::RectangleShape Squares[8][8];
@@ -27,7 +27,7 @@ private:
 	void MapPieces();
 
 public:
-	chessWin(int width, int height, const char* name, const char* imgPath[12]);
+	chessWindow(int width, int height, const char* name, const char* imgPath[12]);
 	bool Update();
 };
 
