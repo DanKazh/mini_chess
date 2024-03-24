@@ -15,12 +15,14 @@ private:
 	sf::RenderWindow window;
 	sf::RectangleShape Board[8][8];
 	sf::Color Colours[2];
+        sf::IntRect Holder;
 	sf::Texture pieceTexture[12];
 	chessSquare squares[64];
 	chessBoard newBoard;
 	int sX, sY;
 
-	void DrawSquares();
+	void FitToHolder();
+        void DrawSquares();
 	void DrawPieces();
 	void MapPieces();
 
