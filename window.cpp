@@ -36,3 +36,15 @@ void chessWindow::DrawPieces()
         }
     }
 }
+
+void chessWindow::MapPieces()
+{
+    for (int i = 0; i < 64; ++i)
+    {
+        if (squares[i].draw == 1)
+        {
+            squares[i].Sprite.setPosition(sf::Vector2f(holder.left + (squares[i].x * holder.width / 8), holder.top + (squares[i].y * holder.height / 8)));
+            squares[i].Sprite.setScale(holder.width / 1600.0, holder.height / 1600.0);
+        }
+    }
+}
