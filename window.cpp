@@ -48,3 +48,53 @@ void chessWindow::MapPieces()
         }
     }
 }
+
+chessWindow::chessWindow(int width, int height, const char* name, const char* imgPath[12])
+{
+    bool colour = 1;
+    colours[0].r = 150;
+    colours[0].g = 75;
+    colours[0].b = 0;
+    colours[1].r = 238;
+    colours[1].g = 238;
+    colours[1].b = 210;
+    sX = width;
+    sY = height;
+    holder.left = 0;
+    holder.top = 0;
+    holder.width = width;
+    holder.height = height;
+    for (int i = 0; i < 8; ++i)
+    {
+        for (int j = 0; j < 8; ++j)
+        {
+            board[i][j].setFillColor(colours[colour]);
+            colour = !colour;
+        }
+        colour = !colour;
+    }
+    FitToHolder();
+    sf::IntRect blank;
+    for (int i = 0; i < 12; ++i)
+    {
+        pieceTexture[i].loadFromFile(imgPath[i], blank);
+    }
+    int index = 0;
+    for (int i = 0; i < 8; ++i)
+    {
+        for (int j = 0; j < 8; ++j)
+        {
+            squares[index].placeID = newBoard.mini_board[i][j];
+            squares[index].x = i;
+            squares[index].y = j;
+            if (squares[index].placeID != -1)
+            {
+                squares[index].Sprite.setTexture(pieceTexture[squares[index].placeID], true);
+                squares[index].draw = 1;
+            }
+            ++index;
+        }
+    }
+    MapPieces();
+    window.create(sf::VideoMode(width, height), name);
+}
