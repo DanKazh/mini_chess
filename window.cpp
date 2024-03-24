@@ -15,7 +15,6 @@ void chessWindow::FitToHolder()
     }
 }
 
-
 void chessWindow::DrawSquares()
 {
     for (int i = 0; i < 8; ++i)
