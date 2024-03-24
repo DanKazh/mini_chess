@@ -4,7 +4,7 @@
 #include <SFML/Window.hpp>
 #include "board.hpp"
 
-struct chessPiece {
+struct chessSquare {
 	sf::Sprite Sprite;
 	int placeID, x, y;
 	bool draw = 0;
@@ -12,16 +12,14 @@ struct chessPiece {
 
 class chessWindow {
 private:
-	sf::RenderWindow win;
-	sf::RectangleShape Squares[8][8];
-	sf::IntRect Holder;
-	sf::Color $Color$[2];
-	sf::Texture pieceTex[12];
-	chessPiece pieces[64];
-	chessBoard cBoard;
-	int $X, $Y;
+	sf::RenderWindow window;
+	sf::RectangleShape Board[8][8];
+	sf::Color Colours[2];
+	sf::Texture pieceTexture[12];
+	chessSquare squares[64];
+	chessBoard newBoard;
+	int sX, sY;
 
-	void FitToHolder();
 	void DrawSquares();
 	void DrawPieces();
 	void MapPieces();
