@@ -36,4 +36,5 @@ public:
     board mBoard;
     bool playMove(move req);
     bool nextTurn();
+    bool isGameOver(bool color);
 };
