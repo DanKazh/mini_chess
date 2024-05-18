@@ -1,34 +1,38 @@
 #ifndef CHESS_WINDOW_H
 #define CHESS_WINDOW_H
-#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include "board.hpp"
 
-struct chessSquare {
-	sf::Sprite Sprite;
-	int placeID, x, y;
-	bool draw = 0;
+struct chessPiece
+{
+    sf::Sprite Sprite;
+    int pieceID, x, y;
+    bool draw = 0;
 };
 
-class chessWindow {
+class chessWin
+{
 private:
-	sf::RenderWindow window;
-	sf::RectangleShape board[8][8];
-	sf::Color colours[2];
-        sf::IntRect holder;
-	sf::Texture pieceTexture[12];
-	chessSquare squares[64];
-	chessBoard newBoard;
-	int sX, sY;
+    sf::RenderWindow win;
+    sf::RectangleShape Squares[8][8];
+    sf::IntRect Holder;
+    sf::Color sColors[2];
+    sf::Texture pieceTex[12];
+    chessPiece pieces[64];
+    chessBoard cBoard;
+    int selected[2];
+    bool cSelect = 0;
+    int sX, sY;
 
-	void FitToHolder();
-        void DrawSquares();
-	void DrawPieces();
-	void MapPieces();
+    void FitToHolder();
+    void DrawSquares();
+    void DrawPieces();
+    void MapPieces();
+    void MapPieces(move curr);
 
 public:
-	chessWindow(int width, int height, const char* name, const char* imgPath[12]);
-	bool Update();
+    chessWin(int width, int height, const char* name, const char* imgPath[12]);
+    bool Update();
 };
-
 #endif
