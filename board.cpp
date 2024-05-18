@@ -768,6 +768,35 @@ bool chessBoard::playMove(move req)
     }
     return false;
 }
+
+bool chessBoard::isGameOver(bool color)
+{
+    std::vector<move> moves = getLegalMoves(mBoard, color);
+    bool noLegalMovesLeft = moves.empty();
+    bool kingUnderAttack = false;
+    for (int i = 0; i < moves.size(); ++i)
+    {
+        if (mBoard.arr[moves[i].X][moves[i].Y] == 4 || mBoard.arr[moves[i].X][moves[i].Y] == 10)
+        {
+            kingUnderAttack = true;
+            break;
+        }
+    }
+
+    if (noLegalMovesLeft && kingUnderAttack)
+    {
+        // Шах и мат
+        return true;
+    }
+    else if (noLegalMovesLeft && !kingUnderAttack)
+    {
+        // Пат
+        return true;
+    }
+
+    return false;
+}
+
 bool chessBoard::nextTurn()
 {
     turn = !turn;
