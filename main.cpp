@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "window.hpp"
 
-const char* defaultTheme[12] = { "D:/chesss/chesss-project/chesss-project/pieces/wp.png",
+const char* defaultTheme[12] = {"D:/chesss/chesss-project/chesss-project/pieces/wp.png",
                                 "D:/chesss/chesss-project/chesss-project/pieces/wr.png",
                                 "D:/chesss/chesss-project/chesss-project/pieces/wn.png",
                                 "D:/chesss/chesss-project/chesss-project/pieces/wb.png",
@@ -18,7 +18,7 @@ const char* defaultTheme[12] = { "D:/chesss/chesss-project/chesss-project/pieces
 
 int main()
 {
-    chessWind window(800, 800, "chess", defaultTheme);
+    chessWin window(800, 800, "chess", defaultTheme);
     while (window.Update())
     {
     }
