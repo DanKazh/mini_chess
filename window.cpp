@@ -126,9 +126,7 @@ bool chessWin::Update()
     sf::Event event;
     while (win.pollEvent(event))
     {
-        switch (event.type)
-        {
-        case sf::Event::Resized:
+        if (event.type == sf::Event::Resized) {
             sX = win.getSize().x;
             sY = win.getSize().y;
             win.setView(sf::View(sf::FloatRect(0, 0, sX, sY)));
@@ -148,8 +146,8 @@ bool chessWin::Update()
             }
             MapPieces();
             FitToHolder();
-            break;
-        case sf::Event::MouseButtonPressed:
+        }
+        if (event.type == sf::Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Button::Left)
             {
                 int pX, pY;
@@ -193,11 +191,10 @@ bool chessWin::Update()
                 Squares[selected[0]][selected[1]].setFillColor(sColors[1 - ((selected[0] + selected[1]) % 2)]);
                 cSelect = 0;
             }
-            break;
-        case sf::Event::Closed:
+        }
+        if (event.type == sf::Event::Closed || cBoard.isGameOver()){
             win.close();
             return false;
-            break;
         }
     }
     win.clear();
