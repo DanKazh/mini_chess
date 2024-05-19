@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 struct move
 {
@@ -30,7 +31,9 @@ private:
     void Rook(std::vector<move>& moves, int x, int y);
     void Bishop(std::vector<move>& moves, int x, int y);
     void Knight(std::vector<move>& moves, int x, int y);
+    std::vector<move> getMoves(board b, bool color);
     std::vector<move> getLegalMoves(board b, bool color);
+    bool isKingInCheck(board b, bool color);
 
 public:
     board mBoard;
