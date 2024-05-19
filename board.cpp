@@ -769,28 +769,13 @@ bool chessBoard::playMove(move req)
     return false;
 }
 
-bool chessBoard::isGameOver(bool color)
+bool chessBoard::isGameOver()
 {
-    std::vector<move> moves = getLegalMoves(mBoard, color);
+    std::vector<move> moves = getLegalMoves(mBoard, turn);
     bool noLegalMovesLeft = moves.empty();
-    bool kingUnderAttack = false;
-    for (int i = 0; i < moves.size(); ++i)
+  
+    if (noLegalMovesLeft)
     {
-        if (mBoard.arr[moves[i].X][moves[i].Y] == 4 || mBoard.arr[moves[i].X][moves[i].Y] == 10)
-        {
-            kingUnderAttack = true;
-            break;
-        }
-    }
-
-    if (noLegalMovesLeft && kingUnderAttack)
-    {
-        // Шах и мат
-        return true;
-    }
-    else if (noLegalMovesLeft && !kingUnderAttack)
-    {
-        // Пат
         return true;
     }
 
