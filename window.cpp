@@ -71,15 +71,38 @@ void chessWin::MapPieces(move curr)
     current->Sprite.setPosition(sf::Vector2f(Holder.left + (current->x * Holder.width / 8), Holder.top + (current->y * Holder.height / 8)));
     current->Sprite.setScale(Holder.width / 1600.f, Holder.height / 1600.f);
 }
-chessWin::chessWin(int width, int height, const char* name, const char* imgPath[12])
+void MShuff(int m[], int size) {
+    srand(time(0));
+    for (int i = 0; i < size; ++i)
+        std::swap(m[i], m[std::rand() % size]);
+}
+void FillSecondRow(int arr[8][8], bool& mode) {
+    if (mode)
+    {
+        int m[6] = { 1, 1, 2, 3, 4, 5 };
+        MShuff(m, 6);
+        for (int i = 1; i < 7; i++)
+        {
+            arr[i][6] = m[i - 1];
+            arr[i][1] = m[i - 1] + 6;
+        }
+    }
+}
+void chessWin::ChangeColors(int red, int green, int blue, int side)
+{
+    sColors[side].r = red;
+    sColors[side].g = green;
+    sColors[side].b = blue;
+}
+chessWin::chessWin(int width, int height, const char* name, const char* imgPath[12], int* colours, bool mode)
 {
     bool sColor = 1;
-    sColors[0].r = 118;
-    sColors[0].g = 150;
-    sColors[0].b = 86;
-    sColors[1].r = 238;
-    sColors[1].g = 238;
-    sColors[1].b = 210;
+    sColors[0].r = colours[0];
+    sColors[0].g = colours[1];
+    sColors[0].b = colours[2];
+    sColors[1].r = colours[3];
+    sColors[1].g = colours[4];
+    sColors[1].b = colours[5];
     sX = width;
     sY = height;
     Holder.left = 0;
@@ -102,6 +125,7 @@ chessWin::chessWin(int width, int height, const char* name, const char* imgPath[
         pieceTex[i].loadFromFile(imgPath[i], blank);
     }
     int index = 0;
+    FillSecondRow(cBoard.mBoard.arr, mode);
     for (int i = 0; i < 8; ++i)
     {
         for (int j = 0; j < 8; ++j)
@@ -120,6 +144,7 @@ chessWin::chessWin(int width, int height, const char* name, const char* imgPath[
     MapPieces();
     win.create(sf::VideoMode(width, height), name);
 }
+
 
 bool chessWin::Update()
 {
@@ -192,7 +217,7 @@ bool chessWin::Update()
                 cSelect = 0;
             }
         }
-        if (event.type == sf::Event::Closed || cBoard.isGameOver()){
+        if (event.type == sf::Event::Closed) {
             win.close();
             return false;
         }
