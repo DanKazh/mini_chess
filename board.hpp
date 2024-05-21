@@ -1,11 +1,13 @@
-#pragma once
 #include <vector>
+#include <ctime>
+
 struct move
 {
     int oX, oY, X, Y;
     move() {}
     move(int oldX, int oldY, int newX, int newY);
 };
+
 struct board
 {
     int arr[8][8] = { {-1, -1, -1, -1, -1, -1, -1, -1},
@@ -17,6 +19,7 @@ struct board
                      {-1, 7, 6, -1, -1, 0, 1, -1},
                      {-1, -1, -1, -1, -1, -1, -1, -1} };
 };
+
 class chessBoard
 {
 private:
@@ -31,13 +34,10 @@ private:
     void Rook(std::vector<move>& moves, int x, int y);
     void Bishop(std::vector<move>& moves, int x, int y);
     void Knight(std::vector<move>& moves, int x, int y);
-    std::vector<move> getMoves(board b, bool color);
     std::vector<move> getLegalMoves(board b, bool color);
-    bool isKingInCheck(board b, bool color);
 
 public:
     board mBoard;
     bool playMove(move req);
     bool nextTurn();
-    bool isGameOver();
 };
