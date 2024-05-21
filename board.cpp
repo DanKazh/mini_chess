@@ -1,5 +1,6 @@
 #include <vector>
 #include "board.hpp"
+#include <iostream>
 
 move::move(int oldX, int oldY, int newX, int newY)
 {
@@ -670,7 +671,7 @@ void chessBoard::Queen(std::vector<move>& moves, int x, int y)
     }
 }
 
-std::vector<move> chessBoard::getMoves(board b, bool color)
+std::vector<move> chessBoard::getLegalMoves(board b, bool color)
 {
     std::vector<move> moves;
 
@@ -682,7 +683,7 @@ std::vector<move> chessBoard::getMoves(board b, bool color)
             {
                 if (b.arr[i][j] == 0)
                 {
-                    wPawn(moves, i, j);
+                    wPawn(moves, i, j);  
                 }
                 else if (b.arr[i][j] == 4)
                 {
@@ -739,8 +740,9 @@ std::vector<move> chessBoard::getMoves(board b, bool color)
 
 bool chessBoard::playMove(move req)
 {
-    std::vector<move> moves = getMoves(mBoard, turn);
+    std::vector<move> moves = getLegalMoves(mBoard, turn);
     move temp;
+    int mistakes = 0;
     for (int i = 0; i < moves.size(); ++i)
     {
         temp = moves[i];
@@ -748,7 +750,18 @@ bool chessBoard::playMove(move req)
         {
             mBoard.arr[req.X][req.Y] = mBoard.arr[req.oX][req.oY];
             mBoard.arr[req.oX][req.oY] = -1;
-            std::vector<move> tempMoves = getMoves(mBoard, !turn);
+            std::vector<move> tempMoves = getLegalMoves(mBoard, !turn);
+            for (int x = 0; x < 8; x++)
+            {
+                if (mBoard.arr[x][0] == 0)
+                {
+                    mBoard.arr[x][0] = 5;
+                }
+                else if (mBoard.arr[x][7] == 6)
+                {
+                    mBoard.arr[x][7] = 11;
+                }
+            }
             bool check = false;
             for (int j = 0; j < tempMoves.size(); ++j)
             {
@@ -766,79 +779,6 @@ bool chessBoard::playMove(move req)
             }
         }
     }
-    return false;
-}
-
-
-std::vector<move> chessBoard::getLegalMoves(board b, bool color)
-{
-    std::vector<move> moves = getMoves(mBoard, turn);
-    std::vector<move> legalMoves;
-
-    for (const auto& move : moves)
-    {
-        board tempBoard = b;
-
-        tempBoard.arr[move.X][move.Y] = tempBoard.arr[move.oX][move.oY];
-        tempBoard.arr[move.oX][move.oY] = -1;
-
-        if (!isKingInCheck(tempBoard, color))
-        {
-            legalMoves.push_back(move);
-        }
-    }
-
-    return legalMoves;
-}
-
-bool chessBoard::isKingInCheck(board b, bool color)
-{
-    int kingValue = color ? 4 : 10; 
-    int kingX, kingY;
-
-    for (int i = 0; i < 8; ++i)
-    {
-        for (int j = 0; j < 8; ++j)
-        {
-            if (b.arr[i][j] == kingValue)
-            {
-                kingX = i;
-                kingY = j;
-                break;
-            }
-        }
-    }
-
-    for (int i = 0; i < 8; ++i)
-    {
-        for (int j = 0; j < 8; ++j)
-        {
-            if (b.arr[i][j] > 0 && (b.arr[i][j] % 2 != kingValue % 2)) // Противник
-            {
-                std::vector<move> opponentMoves = getMoves(b, !color);
-                for (const auto& opponentMove : opponentMoves)
-                {
-                    if (opponentMove.X == kingX && opponentMove.Y == kingY)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-    }
-
-    return false;
-}
-
-bool chessBoard::isGameOver()
-{
-    std::vector<move> moves = getLegalMoves(mBoard, turn);
-
-    if (moves.size() <= 1)
-    {
-        return true;
-    }
-
     return false;
 }
 
