@@ -17,7 +17,6 @@ private:
     sf::RenderWindow win;
     sf::RectangleShape Squares[8][8];
     sf::IntRect Holder;
-    sf::Color sColors[2];
     sf::Texture pieceTex[12];
     chessPiece pieces[64];
     chessBoard cBoard;
@@ -32,7 +31,9 @@ private:
     void MapPieces(move curr);
 
 public:
-    chessWin(int width, int height, const char* name, const char* imgPath[12]);
+    chessWin(int width, int height, const char* name, const char* imgPath[12], int* colours, bool mode);
+    sf::Color sColors[2];
+    void ChangeColors(int red, int green, int blue, int side);
     bool Update();
 };
 #endif
